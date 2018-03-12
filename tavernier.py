@@ -14,6 +14,10 @@ async def on_ready():
     print(bot.user.id)
     print('------')
 
+@bot.event
+async def on_message(message):
+    if message.content.startswith('Tu en penses quoi toi mon petit bot ?'):       
+        await bot.send_message(message.channel, 'Je préfère clairement celle avec les 4 bières mon cochon...')
 
 @bot.command(pass_context=True)
 async def purge(context, number : int):
