@@ -14,12 +14,28 @@ class donjonInstance:
         self.dps = []        
     
     def add_player(self, role, pseudo, classe, ilvl):
+        if pseudo in (utils.dictListToList(self.tanks) + utils.dictListToList(self.heals) + utils.dictListToList(self.dps)):
+            return 2
         if role == "tank":
             self.tanks.append({'pseudo' : pseudo, 'class' : classe, 'ilvl' : ilvl })
+            return 0
         elif role == "heal":
             self.heals.append({'pseudo' : pseudo, 'class' : classe, 'ilvl' : ilvl })
+            return 0
         elif role == "dps":
             self.dps.append({'pseudo' : pseudo, 'class' : classe, 'ilvl' : ilvl })
+            return 0
+
+    def remove_player(self, pseudo):
+        for i in self.tanks:
+            if i['pseudo'] == pseudo:
+                self.tanks.remove(i)
+        for i in self.heals:
+            if i['pseudo'] == pseudo:
+                self.heals.remove(i)
+        for i in self.dps:
+            if i['pseudo'] == pseudo:
+                self.dps.remove(i)
 
     
     def print_full(self):

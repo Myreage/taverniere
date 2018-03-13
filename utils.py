@@ -13,3 +13,11 @@ def userStringToString(list):
         if i != '':
             res += '[' + i + '] > '
     return res
+
+def dictListToList(list):
+    res = []
+    for i in list:
+        res.append(i.values())
+    return res
+
+

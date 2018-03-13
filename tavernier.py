@@ -2,6 +2,9 @@ import discord
 from discord.ext import commands
 import asyncio
 from classes import donjonInstance
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 bot = commands.Bot(command_prefix='!')
 counter = 0
@@ -47,7 +50,18 @@ async def mmplus(context, *args):
             await bot.send_message(context.message.channel, 'S\'inscrire à une bonne castagne ? Fastoche, demande moi:\n**!mm+ tag <djID> <dps/tank/heal> <pseudo> <classe> <ilvl>** ')            
 
         else:
-            dj_list[int(args[1])].add_player(args[2], args[3], args[4], args[5])
+            ret = dj_list[int(args[1])].add_player(args[2], args[3], args[4], args[5])
+            if ret==2:
+                bot.send_message(context.message.channel, 'Personnage déjà inscrit !')
+            else:
+                await bot.send_message(context.message.channel, dj_list[int(args[1])].print_full())
+
+    elif args[0] == 'untag':
+        if len(args) != 3:
+            await bot.send_message(context.message.channel, 'Tu te dégonfles mon chou ? Pas grave viens prendre une bonne pinte ;)\n**!mm+ untag <djID> <pseudo>** ')            
+
+        else:
+            dj_list[int(args[1])].remove_player(args[2])
             await bot.send_message(context.message.channel, dj_list[int(args[1])].print_full())
 
             
