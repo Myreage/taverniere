@@ -2,14 +2,12 @@ import discord
 from discord.ext import commands
 import asyncio
 from classes import donjonInstance
-import logging
-
-logging.basicConfig(level=logging.INFO)
 
 bot = commands.Bot(command_prefix='!')
 counter = 0
 dj_list = []
 
+#Login
 @bot.event
 async def on_ready():
     print('Logged in as')
@@ -17,24 +15,29 @@ async def on_ready():
     print(bot.user.id)
     print('------')
 
+#Triggers
 @bot.event
 async def on_message(message):
-    if message.content.startswith('Tu en penses quoi toi mon petit bot ?'):       
-        await bot.send_message(message.channel, 'Je préfère clairement celle avec les 4 bières mon cochon...')
+    if ' bière ' in message.content.lower():       
+        await bot.send_message(message.channel, 'Quelqu\'un a dit bière ? J\'apporte ça tout de suite <3')
+    if ('@Tavernier Hurlétoile#4667' in message.content) and ('salut' in message.content.lower) :       
+        await bot.send_message(message.channel, 'Salut à vous mes jolis !')
 
+
+#Purge
 @bot.command(pass_context=True)
 async def purge(context, number : int):
 	"""Clear a specified number of messages in the chat"""
 	deleted = await bot.purge_from(context.message.channel, limit=number)
 	await bot.send_message(context.message.channel, 'J\'ai supprimé {} messages... c\'est qu\'ça cause pas mal par ici !'.format(len(deleted)))
 
-    
+#MM+ management  
 @bot.command(pass_context=True, name='mm+')
 async def mmplus(context, *args):
     global dj_list
     global counter
     if len(args) == 0:
-        await bot.send_message(context.message.channel, 'Va falloir revoir ta requête gamin... je te filerai un mode d\'emploi à l\'occase')
+        await bot.send_message(context.message.channel, 'Va falloir revoir ta requête trésor... je te filerai un mode d\'emploi à l\'occase')
 
     elif args[0] == 'create':
         if len(args) != 4:
